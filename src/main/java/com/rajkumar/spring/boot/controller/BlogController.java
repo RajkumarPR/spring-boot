@@ -1,11 +1,15 @@
 package com.rajkumar.spring.boot.controller;
 
+import com.rajkumar.spring.boot.DTO.BlogDto;
 import com.rajkumar.spring.boot.domain.Blog;
 import com.rajkumar.spring.boot.repository.BlogRepository;
+import com.rajkumar.spring.boot.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -13,13 +17,16 @@ import java.util.List;
 public class BlogController {
 
 
-    private final BlogRepository blogRepository;
-
     @Autowired
-    public BlogController(BlogRepository blogRepository) {
-        this.blogRepository = blogRepository;
-    }
+    private BlogService blogService;
 
+    @PostMapping
+    public ResponseEntity<BlogDto> createBlog(@Valid @RequestBody BlogDto blogDto) {
+        if (blogDto != null)
+            return  new ResponseEntity<>(blogService.createBlog(blogDto), HttpStatus.CREATED);
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
 
     @GetMapping
     public ResponseEntity<List<Blog>> getBlogs() {
@@ -28,11 +35,6 @@ public class BlogController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Blog> getBlog() {
-        return null;
-    }
-
-    @PostMapping
-    public ResponseEntity<Blog> createBlog() {
         return null;
     }
 

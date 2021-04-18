@@ -1,4 +1,4 @@
 package com.rajkumar.spring.boot.service;
 
-public class CommentService {
+public interface CommentService {
 }

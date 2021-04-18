@@ -99,31 +99,43 @@
     </dependencies>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-maven-plugin</artifactId>
-                <version>6.5.6</version>
-                <configuration>
-                    <baselineOnMigrate>true</baselineOnMigrate>
-                    <url>jdbc:mysql://localhost:3306/myblogdb?allowPublicKeyRetrieval=true&amp;useSSL=false</url>
-                    <user>root</user>
-                    <password>Password01</password>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>mysql</groupId>
-                        <artifactId>mysql-connector-java</artifactId>
-                        <version>8.0.21</version>
-                        <scope>runtime</scope>
-                    </dependency>
-                </dependencies>
-            </plugin>
-        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                </plugin>
+                <plugin>
+                    <groupId>org.flywaydb</groupId>
+                    <artifactId>flyway-maven-plugin</artifactId>
+                    <version>6.5.6</version>
+                    <configuration>
+                        <baselineOnMigrate>true</baselineOnMigrate>
+                        <url>jdbc:mysql://localhost:3306/blogdb?allowPublicKeyRetrieval=true&amp;useSSL=false</url>
+                        <user>root</user>
+                        <password>Password01</password>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>mysql</groupId>
+                            <artifactId>mysql-connector-java</artifactId>
+                            <version>8.0.21</version>
+                            <scope>runtime</scope>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.sonarsource.scanner.maven</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>3.7.0.1746</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>0.8.6</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -146,6 +158,44 @@
             <properties>
                 <spring.profiles.active>prod</spring.profiles.active>
             </properties>
+        </profile>
+        <profile>
+            <id>sonar</id>
+            <!--<activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>-->
+            <properties>
+                <sonar.host.url>http://localhost:9000</sonar.host.url>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>coverage</id>
+           <!-- <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>-->
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>report</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 
