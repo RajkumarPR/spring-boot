@@ -1,7 +1,7 @@
 package com.rajkumar.spring.boot.controller;
 
 import com.rajkumar.spring.boot.domain.Topic;
-import com.rajkumar.spring.boot.repository.TopicRepository;
+import com.rajkumar.spring.boot.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,18 +16,23 @@ import java.util.List;
 @RequestMapping(value = "/v1/Topics")
 public class TopicController {
 
+    private final TopicService topicService;
+
     @Autowired
-    private TopicRepository topicRepository;
+    public TopicController(TopicService topicService) {
+        this.topicService = topicService;
+
+    }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Topic> getTopic(@PathVariable(value = "id") Long id) {
-        Topic topic = topicRepository.findById(id).get();
+        Topic topic = topicService.getTopic(id);
         return new ResponseEntity<>(topic, HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity<List<Topic>> getAllTopics() {
-        List<Topic> topic = topicRepository.findAll();
+        List<Topic> topic = topicService.getTopics();
         return new ResponseEntity<>(topic, HttpStatus.OK);
     }
 }

@@ -2,7 +2,6 @@ package com.rajkumar.spring.boot.controller;
 
 import com.rajkumar.spring.boot.DTO.BlogDto;
 import com.rajkumar.spring.boot.domain.Blog;
-import com.rajkumar.spring.boot.repository.BlogRepository;
 import com.rajkumar.spring.boot.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,8 +16,13 @@ import java.util.List;
 public class BlogController {
 
 
+    // field injection is not recommended refer https://blog.marcnuri.com/field-injection-is-not-recommended/
+    private final BlogService blogService;
+
     @Autowired
-    private BlogService blogService;
+    public BlogController(BlogService blogService) {
+        this.blogService = blogService;
+    }
 
     @PostMapping
     public ResponseEntity<BlogDto> createBlog(@Valid @RequestBody BlogDto blogDto) {

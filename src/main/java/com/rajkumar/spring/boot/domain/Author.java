@@ -1,5 +1,9 @@
 package com.rajkumar.spring.boot.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -8,6 +12,9 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "author")
 public class Author implements Serializable {
@@ -34,47 +41,4 @@ public class Author implements Serializable {
 
     @OneToMany(mappedBy = "author")
     private Set<Blog> blog = new HashSet<>();
-
-    public Author() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Set<Blog> getBlog() {
-        return blog;
-    }
-
-    public void setBlog(Set<Blog> blog) {
-        this.blog = blog;
-    }
 }

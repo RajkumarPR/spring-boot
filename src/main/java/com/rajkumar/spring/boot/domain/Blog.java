@@ -1,5 +1,9 @@
 package com.rajkumar.spring.boot.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -9,6 +13,10 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "blog")
 public class Blog implements Serializable {
@@ -43,62 +51,4 @@ public class Blog implements Serializable {
     @OneToMany(mappedBy = "blog")
     private Set<BlogImage> blogImages = new HashSet<>();
 
-    public Blog() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    public Topic getTopic() {
-        return topic;
-    }
-
-    public void setTopic(Topic topic) {
-        this.topic = topic;
-    }
-
-    public Author getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(Author author) {
-        this.author = author;
-    }
-
-    public Set<Comments> getComments() {
-        return comments;
-    }
-
-    public void setComments(Set<Comments> comments) {
-        this.comments = comments;
-    }
-
-    public Set<BlogImage> getBlogImages() {
-        return blogImages;
-    }
-
-    public void setBlogImages(Set<BlogImage> blogImages) {
-        this.blogImages = blogImages;
-    }
 }

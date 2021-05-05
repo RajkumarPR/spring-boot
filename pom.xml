@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.3.RELEASE</version>
+        <version>2.3.4.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.rajkumar.spring</groupId>
@@ -15,7 +15,7 @@
     <description>Learning Spring Boot In Depth</description>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>11</java.version>
     </properties>
 
     <dependencies>
@@ -41,6 +41,10 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
 
         <dependency>
@@ -79,12 +83,18 @@
              <artifactId>h2</artifactId>
              <scope>runtime</scope>
          </dependency>-->
-
+        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
         <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.19</version>
+        </dependency>
+
+        <!-- <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
-        </dependency>
+        </dependency> -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -104,6 +114,14 @@
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
+                    <configuration>
+                        <excludes>
+                            <exclude>
+                                <groupId>org.springframework.boot</groupId>
+                                <artifactId>spring-boot-configuration-processor</artifactId>
+                            </exclude>
+                        </excludes>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.flywaydb</groupId>
@@ -111,28 +129,18 @@
                     <version>6.5.6</version>
                     <configuration>
                         <baselineOnMigrate>true</baselineOnMigrate>
-                        <url>jdbc:mysql://localhost:3306/blogdb?allowPublicKeyRetrieval=true&amp;useSSL=false</url>
-                        <user>root</user>
+                        <url>jdbc:postgresql://localhost:5432/blogdb</url>
+                        <user>rajkumar</user>
                         <password>Password01</password>
                     </configuration>
                     <dependencies>
                         <dependency>
-                            <groupId>mysql</groupId>
-                            <artifactId>mysql-connector-java</artifactId>
-                            <version>8.0.21</version>
+                            <groupId>org.postgresql</groupId>
+                            <artifactId>postgresql</artifactId>
+                            <version>42.2.19</version>
                             <scope>runtime</scope>
                         </dependency>
                     </dependencies>
-                </plugin>
-                <plugin>
-                    <groupId>org.sonarsource.scanner.maven</groupId>
-                    <artifactId>sonar-maven-plugin</artifactId>
-                    <version>3.7.0.1746</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.8.6</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -159,44 +167,5 @@
                 <spring.profiles.active>prod</spring.profiles.active>
             </properties>
         </profile>
-        <profile>
-            <id>sonar</id>
-            <!--<activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>-->
-            <properties>
-                <sonar.host.url>http://localhost:9000</sonar.host.url>
-            </properties>
-        </profile>
-
-        <profile>
-            <id>coverage</id>
-           <!-- <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>-->
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.jacoco</groupId>
-                        <artifactId>jacoco-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>prepare-agent</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>report</id>
-                                <phase>prepare-package</phase>
-                                <goals>
-                                    <goal>report</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
     </profiles>
-
 </project>
